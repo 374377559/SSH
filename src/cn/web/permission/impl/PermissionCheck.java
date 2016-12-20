@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.web.entity.Role;
 import cn.web.entity.RolePrivilege;
 import cn.web.entity.User;
@@ -15,6 +17,7 @@ import cn.web.service.UserService;
  * @author 杨建
  * 2016年12月19日上午9:05:11
  */
+@Service("permissionCheck")
 public class PermissionCheck implements cn.web.permission.PermissionCheck{
 
 	@Resource

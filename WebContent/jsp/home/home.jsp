@@ -192,7 +192,7 @@
     </div>
 </div>
 <!-- 尾部{ -->
-<div class="foot">版权所有©国税局 2014</div>
+<div class="foot">版权所有©国税局 2016</div>
 <!-- }尾部 -->
 </body>
 </html>

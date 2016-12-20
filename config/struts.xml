@@ -68,6 +68,7 @@
 			<result name="home" type="redirectAction">
 				<param name="actionName">home</param>
 			</result>
+			<result name="noPermissionUI">/jsp/noPermissionUI.jsp</result>
 		</action>
 	</package>
 </struts>

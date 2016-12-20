@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import cn.web.constant.Constant;
 import cn.web.entity.User;
@@ -37,13 +39,15 @@ public class LoginFilter implements Filter {
 				if(uri.contains("/nsfw/")){
 					//访问纳税服务系统
 					 User user =(User)request.getSession().getAttribute(Constant.USER);
-					 PermissionCheck pc=null;
+					//获取spring容器
+					 WebApplicationContext applicationcontext = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
+					 PermissionCheck pc = (PermissionCheck) applicationcontext.getBean("permissionCheck");
 					 if(pc.isAccessible(user,"nsfw")){
 						 //说明有权限放行
 						 chain.doFilter(request, response);
 					 }else{
 						//没有权限
-						 response.sendRedirect(request.getContextPath() + "/login_noPermissionUI.jsp.action");
+						 response.sendRedirect(request.getContextPath() + "/login_toNoPermissionUI.action");
 					 }
 					 
 				}else{

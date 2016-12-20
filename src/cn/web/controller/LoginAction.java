@@ -58,6 +58,10 @@ public class LoginAction extends ActionSupport{
 		ServletActionContext.getRequest().getSession().removeAttribute(Constant.USER);
 		return toLoginUI();
 	}
+	//跳转到无权限页面
+	public String toNoPermissionUI(){
+		return "noPermissionUI";
+	}
 	public User getUser() {
 		return user;
 	}
