@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 	   xmlns:aop="http://www.springframework.org/schema/aop"
+ 	   xmlns:tx="http://www.springframework.org/schema/tx"
+ 	   xmlns:context="http://www.springframework.org/schema/context"
+ 	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ 	   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ 	   http://www.springframework.org/schema/aop
+ 	   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+ 	   http://www.springframework.org/schema/tx 
+ 	   http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+ 	   http://www.springframework.org/schema/context 
+ 	   http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+ 	 
+ 	 <!-- 开启注解 -->
+ 	 <context:annotation-config/>
+ 	 <!-- 设置扫描范围 -->
+ 	 <context:component-scan base-package="cn.web"/>
+ 	 <!-- 开启自动AOP代理 -->
+ 	 <aop:aspectj-autoproxy/>
+ 	 
+ 	  <!-- 第一步： 创建数据源(c3p0)-->
+	  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+			<property name="driverClass" value="com.mysql.jdbc.Driver" />
+			<property name="jdbcUrl"
+			value="jdbc:mysql:///ssh" />
+			<property name="user" value="root" />
+			<property name="password" value="123"/>
+	  </bean>
+	
+ 	 		<!-- 第二步：配置SessionFactory -->
+ 	 <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- 注入数据源 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 配置hibernate参数 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.fetch_size">50</prop>
+			</props>
+		</property>
+				<!--第三步：扫描hbm文件-->
+		<property name="mappingDirectoryLocations" value="classpath:cn/web/entity/"/>
+	 </bean>
+
+					<!-- 第四步： 声明一个事务事物管理器bean-->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 配置事务的传播特性 ，指定事务管理器：告诉spring使用哪个事物管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- 配置详细的事务语义 -->
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 哪些类的哪些方法参与事务 -->
+	<aop:config>
+		<!--配置切入点，匹配指定包下所有的类的所有方法的执行 -->
+		<aop:pointcut id="mycut" expression="execution(* cn.web.service..*.*(..))" />
+		<!-- 指定在txAdvice切入点应用txAdvice事务切面 -->
+		<aop:advisor pointcut-ref="mycut" advice-ref="txAdvice" />
+	</aop:config>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
