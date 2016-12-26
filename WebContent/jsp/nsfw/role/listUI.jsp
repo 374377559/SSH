@@ -5,12 +5,12 @@
     <title>角色管理</title>
     <script type="text/javascript">
   	//全选、全反选
-	function doSelectAll(){
+		function doSelectAll(){
 		// jquery 1.6 前
 		//$("input[name=selectedRow]").attr("checked", $("#selAll").is(":checked"));
 		//prop jquery 1.6+建议使用
 		$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));		
-	}
+		}
 		//添加
 		function doAdd(){
 			document.forms[0].action = "${basePath}nsfw/role_addUI.action";

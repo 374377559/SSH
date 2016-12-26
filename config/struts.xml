@@ -35,13 +35,14 @@
 			<result name="sysError">/jsp/error.jsp</result>
 			<result name="input">/jsp/error.jsp</result>
 		</global-results>
-		<!-- ================全局异常映射================ -->
+		<!-- 自定义异常 -->
 		<global-exception-mappings>
 			<exception-mapping result="sysError" exception="cn.web.exception.SysException"></exception-mapping>
 			<exception-mapping result="input" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
 	</package>
 	
+	<!-- ================权限跳转================ -->
 	<package name="role-action" extends="base-default">
 		<action name="role_*" class="cn.web.controller.RoleAction" method="{1}">
 			<result name="{1}">/jsp/nsfw/role/{1}.jsp</result>
@@ -71,6 +72,22 @@
 			<result name="noPermissionUI">/jsp/noPermissionUI.jsp</result>
 		</action>
 	</package>
+	<!-- =================消息跳转================= -->
+	<package name="info-action" extends="base-default">
+		<action name="info_*" class="cn.web.controller.InfoAction" method="{1}">
+			<result name="{1}">/jsp/nsfw/info/{1}.jsp</result>
+			<result name="list" type="redirectAction">
+				<param name="actionName">info_listUI</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	
+	
+	
+	
+	
 </struts>
 
 
