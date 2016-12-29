@@ -27,13 +27,11 @@ import cn.web.service.InfoService;
 public class InfoAction extends BaseAction {
 	@Resource
 	private InfoService infoService;
-	private List<Info> infoList;
+	//private List<Info> infoList;
 	private Info info;
 	private String[] privilegeIds;
 	private String strTitle;
-	private PageResult pageResult;
-	private int pageNo;
-	private int pageSize;
+	
 		//列表页面
 		public String listUI() throws Exception{
 			//加载分类集合
@@ -135,12 +133,7 @@ public class InfoAction extends BaseAction {
 			}
 		}
 	
-	public List<Info> getInfoList() {
-		return infoList;
-	}
-	public void setInfoList(List<Info> infoList) {
-		this.infoList = infoList;
-	}
+	
 	public Info getInfo() {
 		return info;
 	}
@@ -159,24 +152,6 @@ public class InfoAction extends BaseAction {
 	public void setStrTitle(String strTitle) {
 		this.strTitle = strTitle;
 	}
-	public PageResult getPageResult() {
-		return pageResult;
-	}
-	public void setPageResult(PageResult pageResult) {
-		this.pageResult = pageResult;
-	}
-	public int getPageNo() {
-		return pageNo;
-	}
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
-	public int getPageSize() {
-		if(pageSize	< 1) pageSize =3;
-		return pageSize;
-	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+	
 	
 }

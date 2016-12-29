@@ -128,6 +128,7 @@ alert(user.id);
             <td><s:textarea name="user.memo" cols="75" rows="3"/></td>
         </tr>
     </table>
+     <s:hidden name="pageNo"/>
     <s:hidden name="user.id"/>
     <div class="tc mt20">
         <input type="button" class="btnB2" value="保存" onclick="doSubmit()" />

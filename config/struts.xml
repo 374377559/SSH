@@ -18,6 +18,9 @@
 			<result name="{1}">/jsp/nsfw/user/{1}.jsp</result>
 			<result name="list" type="redirectAction">
 				<param name="actionName">user_listUI</param>
+				<param name="user.name">${strName}</param>
+				<param name="pageNo">${pageNo}</param>
+				<param name="encode">true</param>
 			</result>
 			
 		</action>
@@ -48,6 +51,9 @@
 			<result name="{1}">/jsp/nsfw/role/{1}.jsp</result>
 			<result name="list" type="redirectAction">
 				<param name="actionName">role_listUI</param>
+				<param name="role.name">${strName}</param>
+				<param name="pageNo">${pageNo}</param>
+				<param name="encode">true</param>
 			</result>
 		</action>
 	</package>
@@ -79,6 +85,7 @@
 			<result name="list" type="redirectAction">
 				<param name="actionName">info_listUI</param>
 				<param name="info.title">${strTitle}</param>
+				<param name="pageNo">${pageNo}</param>
 				<param name="encode">true</param>
 			</result>
 		</action>

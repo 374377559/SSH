@@ -52,6 +52,7 @@
     </table>
     <!-- 默认状态为发布 -->
     <s:hidden name="strTitle"/>
+    <s:hidden name="pageNo"/>
     <s:hidden name="info.infoId"/>
     <s:hidden name="info.state"/>
     <div class="tc mt20">

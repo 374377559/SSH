@@ -1,10 +1,17 @@
 package cn.web.controller;
 
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.List;
 import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.opensymphony.xwork2.ActionContext;
+import com.web.util.QueryHelper;
+
 import cn.web.constant.Constant;
+import cn.web.entity.Info;
 import cn.web.entity.Role;
 import cn.web.entity.RolePrivilege;
 import cn.web.entity.RolePrivilegeId;
@@ -19,20 +26,25 @@ public class RoleAction extends BaseAction {
 	
 	@Resource
 	private RoleService roleService;
-	private List<Role> roleList;
 	private Role role;
 	private String[] privilegeIds;
-	
+	private String strName;
 	//列表页面
 	public String listUI() throws Exception{
 		//加载权限集合
 		ActionContext.getContext().getContextMap().put("privilegeMap", Constant.PRIVILEGE_MAP);
+		QueryHelper queryHelper = new QueryHelper(Role.class, "r");
 		try {
-			roleList = roleService.findObjects();
+			if(role != null){
+				if(StringUtils.isNotBlank(role.getName())){
+					role.setName(URLDecoder.decode(role.getName(), "utf-8"));
+					queryHelper.addCondition("r.name like ?", "%" + role.getName() + "%");
+				}
+			}
+			pageResult = roleService.getPageResult(queryHelper,getPageNo(),getPageSize());
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-		
 		return "listUI";
 	}
 	//跳转到新增页面
@@ -66,6 +78,7 @@ public class RoleAction extends BaseAction {
 		//加载权限集合
 		ActionContext.getContext().getContextMap().put("privilegeMap", Constant.PRIVILEGE_MAP);
 		if (role != null && role.getRoleId() != null) {
+			 strName = role.getName();
 			role = roleService.findObjectById(role.getRoleId());
 			//处理权限回显
 			if(role.getRolePrivileges() != null){
@@ -100,6 +113,7 @@ public class RoleAction extends BaseAction {
 	//删除
 	public String delete(){
 		if(role != null && role.getRoleId() != null){
+			strName = role.getName();
 			roleService.delete(role.getRoleId());
 		}
 		return "list";
@@ -114,12 +128,6 @@ public class RoleAction extends BaseAction {
 		return "list";
 	}
 	
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
 	public Role getRole() {
 		return role;
 	}
@@ -132,5 +140,10 @@ public class RoleAction extends BaseAction {
 	public void setPrivilegeIds(String[] privilegeIds) {
 		this.privilegeIds = privilegeIds;
 	}
-	
+	public String getStrName() {
+		return strName;
+	}
+	public void setStrName(String strName) {
+		this.strName = strName;
+	}
 }

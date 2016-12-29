@@ -2,6 +2,7 @@ package cn.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.UUID;
 import javax.annotation.Resource;
@@ -13,7 +14,9 @@ import org.aspectj.util.FileUtil;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.web.util.QueryHelper;
 
+import cn.web.entity.Info;
 import cn.web.entity.User;
 import cn.web.entity.UserRole;
 import cn.web.exception.ActionException;
@@ -33,8 +36,7 @@ public class UserAction extends BaseAction{
 	private UserService userService;
 	@Resource
 	private RoleService roleService;
-	
-	private List<User> userList;
+
 	private User user;
 	private String[] selectedRow;
 	//图片上传
@@ -47,10 +49,21 @@ public class UserAction extends BaseAction{
 	private String userExcelFileName;
 	//角色获取
 	private String[] userRoleIds;
-	
+	private String strName;
 	//列表页面
-	public String listUI(){
-		userList = userService.findObjects();
+	public String listUI() throws Exception{
+		QueryHelper queryHelper = new QueryHelper(User.class, "u");
+		try {
+			if(user != null){
+				if(StringUtils.isNotBlank(user.getName())){
+					user.setName(URLDecoder.decode(user.getName(), "utf-8"));
+					queryHelper.addCondition("u.name like ?", "%" + user.getName() + "%");
+				}
+			}
+			pageResult = userService.getPageResult(queryHelper,getPageNo(),getPageSize());
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
 		return "listUI";
 	}
 	//跳转到新增页面
@@ -88,6 +101,7 @@ public class UserAction extends BaseAction{
 		ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects());
 		
 		if (user != null && user.getId() != null) {
+			strName = user.getName();
 			user = userService.findObjectById(user.getId());
 			//处理角色回显
 			List<UserRole> list = userService.getUserRolesByUserId(user.getId());
@@ -128,6 +142,7 @@ public class UserAction extends BaseAction{
 	//删除
 	public String delete(){
 		if(user != null && user.getId() != null){
+			strName = user.getName();
 			userService.delete(user.getId());
 		}
 		return "list";
@@ -136,6 +151,7 @@ public class UserAction extends BaseAction{
 	public String deleteSelected(){
 		if(selectedRow != null){
 			for(String id: selectedRow){
+				strName = user.getName();
 				userService.delete(id);
 			}
 		}
@@ -144,14 +160,12 @@ public class UserAction extends BaseAction{
 	//导出用户表
 	public void exportExcel() throws ActionException{
 		try {
-			//查找用户列表
-			userList = userService.findObjects();
 			//输出
 			HttpServletResponse response=ServletActionContext.getResponse();
 			response.setContentType("application/x-execl");
 			response.setHeader("Content-Disposition", "attachment;filename=" + new String("用户列表.xls".getBytes(),"ISO-8859-1"));
 			ServletOutputStream outPutStream = response.getOutputStream();
-			userService.exportExcel(userList,outPutStream);
+			userService.exportExcel(userService.findObjects(),outPutStream);
 			if(outPutStream != null){
 				outPutStream.close();
 			}
@@ -197,12 +211,7 @@ public class UserAction extends BaseAction{
 		
 	}
 	
-	public List<User> getUserList() {
-		return userList;
-	}
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -256,6 +265,12 @@ public class UserAction extends BaseAction{
 	}
 	public void setUserRoleIds(String[] userRoleIds) {
 		this.userRoleIds = userRoleIds;
+	}
+	public String getStrName() {
+		return strName;
+	}
+	public void setStrName(String strName) {
+		this.strName = strName;
 	}
 	
 }
