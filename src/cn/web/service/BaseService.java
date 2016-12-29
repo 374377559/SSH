@@ -6,6 +6,7 @@ import java.util.List;
 import com.web.util.QueryHelper;
 
 import cn.web.entity.Info;
+import cn.web.page.PageResult;
 
 /**
  * 对Service的封装
@@ -25,7 +26,9 @@ public interface BaseService<T> {
 		public List<T> findObjects();
 		//条件查询-----该注解表示不推荐使用方法
 		@Deprecated
-		List<T> findObjects(String hql, List<Object> parameters);
+		public List<T> findObjects(String hql, List<Object> parameters);
 		//根据条件查询
-		List<Info> findObjects(QueryHelper queryHelper);
+		public List<Info> findObjects(QueryHelper queryHelper);
+		//分页查询
+		public PageResult getPageResult(QueryHelper queryHelper, int pageNo, int pageSize);
 }

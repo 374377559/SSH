@@ -92,7 +92,7 @@
                             <td width="80" align="center">状态</td>
                             <td width="120" align="center">操作</td>
                         </tr>
-                        <s:iterator value="infoList" status="st">
+                        <s:iterator value="pageResult.items" status="st">
                             <tr <s:if test="#st.odd"> bgcolor="f8f8f8" </s:if> >
                                 <td align="center"><input type="checkbox" name="selectedRow" value="<s:property value='infoId'/>"/></td>
                                 <td align="center"><s:property value="title"/></td>
@@ -119,19 +119,35 @@
                 </div>
             </div>
         <div class="c_pate" style="margin-top: 5px;">
+        <s:if test="pageResult.totalCount > 0">
 		<table width="100%" class="pageDown" border="0" cellspacing="0"
 			cellpadding="0">
 			<tr>
 				<td align="right">
-                 	总共1条记录，当前第 1 页，共 1 页 &nbsp;&nbsp;
-                            <a href="#">上一页</a>&nbsp;&nbsp;<a href="#">下一页</a>
-					到&nbsp;<input type="text" style="width: 30px;" onkeypress="if(event.keyCode == 13){doGoPage(this.value);}" min="1"
-					max="" value="1" /> &nbsp;&nbsp;
+                 	总共 <s:property value="pageResult.totalCount"/>条记录，当前第 <s:property value="pageResult.pageNo"/> 页，共 <s:property value="pageResult.totalPageCount"/> 页 &nbsp;&nbsp;
+                          <s:if test="pageResult.pageNo > 1">
+                            <a href="javascript:doGoPage(<s:property value='pageResult.pageNo-1'/>)">上一页</a>&nbsp;&nbsp;
+                          </s:if>
+                          <s:if test="pageResult.pageNo < pageResult.totalPageCount">
+                            <a href="javascript:doGoPage(<s:property value='pageResult.pageNo+1'/>)">下一页</a>
+						 </s:if>
+					到&nbsp;<input id="pageNo" name="pageNo" type="text" style="width: 30px;" onkeypress="if(event.keyCode == 13){doGoPage(this.value);}" min="1"
+					max="" value="<s:property value='pageResult.pageNo'/>" /> &nbsp;&nbsp;
 			    </td>
 			</tr>
 		</table>	
+		</s:if><s:else>
+			暂无数据！！！
+		</s:else>
         </div>
-
+			<script type="text/javascript">
+				//翻页
+				function doGoPage(pageNo){
+					document.getElementById("pageNo").value = pageNo;
+					document.forms[0].action = "${basePath}nsfw/info_listUI.action";
+					document.forms[0].submit();
+				}
+			</script>
         </div>
     </div>
 </form>

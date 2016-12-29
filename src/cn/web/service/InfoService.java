@@ -5,6 +5,7 @@ import java.util.List;
 import com.web.util.QueryHelper;
 
 import cn.web.entity.Info;
+import cn.web.page.PageResult;
 
 /**
  * 消息接口
@@ -12,7 +13,4 @@ import cn.web.entity.Info;
  * 2016年12月21日下午4:10:25
  */
 public interface InfoService extends BaseService<Info>{
-
-	
-		
 }

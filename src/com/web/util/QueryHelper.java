@@ -69,6 +69,12 @@ public class QueryHelper {
 	public String getQueryListHql(){
 		return fromClause + whereClause + orderByClause;
 	}
+	
+	//查询计数sql语句
+	public String getQueryCountHql(){
+		return "SELECT COUNT(*) " + fromClause + whereClause;
+	}
+		
 	//查询sql语句中？号对应的参数集合
 	public List<Object> getParameters(){
 		return parameters;

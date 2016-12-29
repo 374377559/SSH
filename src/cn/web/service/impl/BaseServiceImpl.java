@@ -8,6 +8,7 @@ import com.web.util.QueryHelper;
 import cn.web.dao.BaseDao;
 import cn.web.dao.InfoDao;
 import cn.web.entity.Info;
+import cn.web.page.PageResult;
 import cn.web.service.BaseService;
 
 /**
@@ -58,6 +59,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public List<Info> findObjects(QueryHelper queryHelper) {
 		return baseDao.finObjects(queryHelper);
+	}
+
+
+	@Override
+	public PageResult getPageResult(QueryHelper queryHelper, int pageNo, int pageSize) {
+		return baseDao.getPageResult(queryHelper,pageNo,pageSize);
 	}
 
 	
