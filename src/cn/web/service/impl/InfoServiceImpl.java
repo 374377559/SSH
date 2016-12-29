@@ -15,34 +15,16 @@ import cn.web.service.InfoService;
  * 2016年12月21日下午4:10:07
  */
 @Service("infoService")
-public class InfoServiceImpl implements InfoService {
+public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoService {
 
-	@Resource
 	private InfoDao infoDao;
 	
-	@Override
-	public void save(Info info) {
-		infoDao.save(info);
+	@Resource
+	public void setInfoDao(InfoDao infoDao) {
+		super.setBaseDao(infoDao);
+		this.infoDao = infoDao;
 	}
-
-	@Override
-	public void update(Info info) {
-		infoDao.update(info);
-	}
-
-	@Override
-	public void delete(Serializable id) {
-		infoDao.delete(id);
-	}
-
-	@Override
-	public Info findObjectById(Serializable id) {
-		return infoDao.findObjectById(id);
-	}
-
-	@Override
-	public List<Info> findObjects() {
-		return infoDao.findObjects();
-	}
-
+	
+	
+	
 }

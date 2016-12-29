@@ -1,5 +1,6 @@
 package cn.web.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.web.entity.User;
@@ -31,7 +32,7 @@ public interface UserDao extends BaseDao<User>{
 	 * @param id
 	 * void
 	 */
-	public void deleteUserRoleByUserId(String id);
+	public void deleteUserRoleByUserId(Serializable id);
 	/**
 	 * 根据用户Id获取对应的所有用户角色
 	 * @param id

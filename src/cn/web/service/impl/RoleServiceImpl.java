@@ -18,15 +18,16 @@ import cn.web.service.RoleService;
  * 2016年12月14日下午9:22:13
  */
 @Service("roleService")
-public class RoleServiceImpl implements RoleService {
-
-	@Resource
+public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
+	
 	private RoleDao roleDao;
 
-	@Override
-	public void save(Role role) {
-		roleDao.save(role);
+	@Resource
+	public void setRoleDao(RoleDao roleDao) {
+		super.setBaseDao(roleDao);
+		this.roleDao = roleDao;
 	}
+
 
 	@Override
 	public void update(Role role) {
@@ -36,19 +37,5 @@ public class RoleServiceImpl implements RoleService {
 		roleDao.update(role);
 	}
 
-	@Override
-	public void delete(Serializable id) {
-		roleDao.delete(id);
-	}
-
-	@Override
-	public Role findObjectById(Serializable id) {
-		return roleDao.findObjectById(id);
-	}
-
-	@Override
-	public List<Role> findObjects() {
-		return roleDao.findObjects();
-	}
 
 }

@@ -1,4 +1,4 @@
-package cn.web.dao;
+ package cn.web.service;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,11 +8,11 @@ import com.web.util.QueryHelper;
 import cn.web.entity.Info;
 
 /**
- * 对Dao的封装
+ * 对Service的封装
  * @author 杨建
- * 2016年12月14日下午2:18:04
+ * 2016年12月27日下午3:58:59
  */
-public interface BaseDao<T> {
+public interface BaseService<T> {
 		//新增
 		public void save(T entity);
 		//更新
@@ -23,9 +23,9 @@ public interface BaseDao<T> {
 		public T findObjectById(Serializable id);
 		//查找列表
 		public List<T> findObjects();
-		//条件查询
-		List<T> finObjects(String hql, List<Object> parameters);
-		//条件查询----条件助手
-		public List<Info> finObjects(QueryHelper queryHelper);
-		
+		//条件查询-----该注解表示不推荐使用方法
+		@Deprecated
+		List<T> findObjects(String hql, List<Object> parameters);
+		//根据条件查询
+		List<Info> findObjects(QueryHelper queryHelper);
 }

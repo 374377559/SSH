@@ -31,33 +31,21 @@ import cn.web.service.UserService;
  * 2016年12月14日下午2:19:11
  */
 @Service("userService")
-public class UserServiceImpl implements UserService{
-	@Resource
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
+
 	private UserDao userDao;
-
-	@Override
-	public void save(User user) {
-		userDao.save(user);
-	}
-
-	@Override
-	public void update(User user) {
-		userDao.update(user);
+	
+	@Resource
+	public void setUserDao(UserDao userDao) {
+		super.setBaseDao(userDao);
+		this.userDao = userDao;
 	}
 
 	@Override
 	public void delete(Serializable id) {
 		userDao.delete(id);
-	}
-
-	@Override
-	public User findObjectById(Serializable id) {
-		return userDao.findObjectById(id);
-	}
-
-	@Override
-	public List<User> findObjects() {
-		return userDao.findObjects();
+		//删除用户对应的权限
+		userDao.deleteUserRoleByUserId(id);
 	}
 
 	@Override
