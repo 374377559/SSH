@@ -12,7 +12,8 @@
       	//全选、全反选
 		function doSelectAll(){
 			
-			$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));		
+			$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));	
+				
 		}
 		//添加
 		function doAdd(){

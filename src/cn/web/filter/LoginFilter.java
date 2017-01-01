@@ -19,6 +19,11 @@ import cn.web.constant.Constant;
 import cn.web.entity.User;
 import cn.web.permission.PermissionCheck;
 
+/**
+ * 登录过滤器
+ * @author 杨建
+ * 2016年12月30日上午8:58:35
+ */
 public class LoginFilter implements Filter {
 
 	@Override
