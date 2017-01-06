@@ -28,7 +28,7 @@ public interface BaseService<T> {
 		@Deprecated
 		public List<T> findObjects(String hql, List<Object> parameters);
 		//根据条件查询
-		public List<Info> findObjects(QueryHelper queryHelper);
+		public List<T> findObjects(QueryHelper queryHelper);
 		//分页查询
 		public PageResult getPageResult(QueryHelper queryHelper, int pageNo, int pageSize);
 }

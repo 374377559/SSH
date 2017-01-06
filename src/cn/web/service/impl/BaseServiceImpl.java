@@ -57,7 +57,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 
 	@Override
-	public List<Info> findObjects(QueryHelper queryHelper) {
+	public List<T> findObjects(QueryHelper queryHelper) {
 		return baseDao.finObjects(queryHelper);
 	}
 

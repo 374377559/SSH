@@ -65,7 +65,7 @@ public class BaseDaoImpl<T> extends DBUtil implements BaseDao<T> {
 	}
 
 	@Override
-	public List<Info> finObjects(QueryHelper queryHelper) {
+	public List<T> finObjects(QueryHelper queryHelper) {
 		Query query = getSession().createQuery(queryHelper.getQueryListHql());
 		List<Object> parameters =queryHelper.getParameters();
 		if(parameters != null){

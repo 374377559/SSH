@@ -69,7 +69,7 @@
     <table id="baseInfo" width="100%" align="center" class="list" border="0" cellpadding="0" cellspacing="0"  >
         <tr>
             <td class="tdBg" width="200px">所属部门：</td>
-            <td><s:select name="user.dept" list="#{'部门A':'部门A','部门B':'部门B'}"/></td>
+            <td><s:select name="user.dept" list="#{'':'请选择','部门A':'部门A','部门B':'部门B'}"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">头像：</td>

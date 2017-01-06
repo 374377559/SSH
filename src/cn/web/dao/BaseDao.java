@@ -27,7 +27,7 @@ public interface BaseDao<T> {
 		//条件查询
 		List<T> finObjects(String hql, List<Object> parameters);
 		//条件查询----条件助手
-		public List<Info> finObjects(QueryHelper queryHelper);
+		public List<T> finObjects(QueryHelper queryHelper);
 		//分页查询
 		public PageResult getPageResult(QueryHelper queryHelper, int pageNo, int pageSize);
 		

@@ -67,6 +67,14 @@
 		</action>
 	</package>
 	
+	<package name="homesys-action" extends="json-default">
+		<action name="home_getUserJson2" class="cn.web.controller.HomeAction" method="getUserJson2">
+			<result type="json">
+				<param name="root">return_map</param>
+			</result>
+		</action>
+	</package>
+	
 	<!-- ================登录跳转================ -->
 	<package name="login-action" extends="struts-default">
 		<action name="login_*" class="cn.web.controller.LoginAction" method="{1}">
