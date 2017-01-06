@@ -20,9 +20,7 @@ import cn.web.service.ComplainService;
  * 2016年12月30日上午9:00:51
  */
 public class ComplainAction extends BaseAction{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Resource
 	private ComplainService complainService;
@@ -30,6 +28,8 @@ public class ComplainAction extends BaseAction{
 	private String startTime;
 	private String endTime;
 	private ComplainReply reply;
+	private String strTitle;
+	private String strState;
 	
 	public String listUI() throws Exception{
 		//加载状体
@@ -68,6 +68,8 @@ public class ComplainAction extends BaseAction{
 		//加载状态集合
 		ActionContext.getContext().getContextMap().put("complainStateMap", Complain.COMPLAIN_STATE_MAP);
 		if(complain != null){
+			strTitle = complain.getCompTitle();
+			strState = complain.getState();
 			complain = complainService.findObjectById(complain.getCompId());
 		}
 		return "dealUI";
@@ -122,6 +124,22 @@ public class ComplainAction extends BaseAction{
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getStrTitle() {
+		return strTitle;
+	}
+
+	public void setStrTitle(String strTitle) {
+		this.strTitle = strTitle;
+	}
+
+	public String getStrState() {
+		return strState;
+	}
+
+	public void setStrState(String strState) {
+		this.strState = strState;
 	}
 	
 	

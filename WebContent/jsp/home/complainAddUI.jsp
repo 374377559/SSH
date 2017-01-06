@@ -48,7 +48,7 @@
     	function doSubmit(){
     		//1.提交表单并保存
     		$.ajax({
-				url:"${basePath}sys/home_complainAdd.action",
+				url:"${basePath}/home_complainAdd.action",
 				data:$("#form").serialize(),
 				type:"post",
 				async: false,
@@ -84,7 +84,7 @@
         <tr>
             <td class="tdBg">被投诉人部门：</td>
             <td>
-            <s:select name="user.dept" id="toCompDept" list="#{'':'请选择','部门A':'部门A','部门B':'部门B'}" onchange="doSelectDept()"/>
+            <s:select name="comp.toCompDept" id="toCompDept" list="#{'':'请选择','部门A':'部门A','部门B':'部门B'}" onchange="doSelectDept()"/>
             </td>
         </tr>
         <tr>
@@ -99,11 +99,13 @@
         </tr>
         <tr>
             <td class="tdBg">是否匿名投诉：</td>
-            <td><s:radio name="comp.isNm" list="#{'0':'非匿名投诉','1':'匿名投诉' }" value="0"/></td>
+            <td><s:radio name="comp.isNm" list="#{'false':'非匿名投诉','true':'匿名投诉' }" value="true"/></td>
         </tr>
        
     </table>
-
+	<s:hidden name="comp.compCompany" value="%{#session.SYS_USER.dept}"/>
+	<s:hidden name="comp.compName" value="%{#session.SYS_USER.name}"/>
+	<s:hidden name="comp.compMobile" value="%{#session.SYS_USER.mobile}"/>
     <div class="tc mt20">
         <input type="button" class="btnB2" value="保存" onclick="doSubmit()"/>
         &nbsp;&nbsp;&nbsp;&nbsp;

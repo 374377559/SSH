@@ -1,6 +1,8 @@
 package cn.web.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +17,9 @@ import org.json.JSONObject;
 
 import com.web.util.QueryHelper;
 
-
+import cn.web.entity.Complain;
 import cn.web.entity.User;
+import cn.web.service.ComplainService;
 import cn.web.service.UserService;
 
 /**
@@ -26,9 +29,14 @@ import cn.web.service.UserService;
  */
 
 public class HomeAction extends BaseAction {
+	
 	@Resource
 	private UserService userService;
+	@Resource
+	private ComplainService complainService;
+	
 	private Map<String, Object> return_map;
+	private Complain comp;
 	
 	public String execute(){
 		return "home";
@@ -93,11 +101,44 @@ public class HomeAction extends BaseAction {
 		return SUCCESS;
 	}
 	
+	//保存投诉
+	public void  complainAdd(){
+		if(comp != null){
+			comp.setState(Complain.COMPLAIN_STATE_UNDONE);
+			comp.setCompTime(new Timestamp(new Date().getTime()));
+			complainService.save(comp);
+			
+			try {
+				//输出
+				HttpServletResponse response = ServletActionContext.getResponse();
+				response.setContentType("text/html");
+				ServletOutputStream outputStream;
+				outputStream = response.getOutputStream();
+				outputStream.write("success".getBytes("utf-8"));
+				outputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
+	
+	
+	
+	
 	public Map<String, Object> getReturn_map() {
 		return return_map;
 	}
 	public void setReturn_map(Map<String, Object> return_map) {
 		this.return_map = return_map;
 	}
+	public Complain getComp() {
+		return comp;
+	}
+	public void setComp(Complain comp) {
+		this.comp = comp;
+	}
+	
 	
 }
